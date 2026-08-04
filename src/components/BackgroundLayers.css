@@ -1,0 +1,185 @@
+/* ════════════════════════════════════════════════
+   BACKGROUND LAYERS — Futuristic Digital Universe
+   ════════════════════════════════════════════════ */
+
+.bg-layers {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Layer 2 — Static Aurora */
+.bg-aurora {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(124, 58, 237, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(96, 165, 250, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translateX(30px) translateY(-20px) scale(1.05);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translateX(-20px) translateY(15px) scale(0.97);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(10px) translateY(-10px) scale(1.02);
+    opacity: 0.7;
+  }
+}
+
+/* Layer 3 — Floating gradient blobs */
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.bg-blob-1 {
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+}
+
+.bg-blob-2 {
+  width: 500px;
+  height: 500px;
+  bottom: 10%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.12) 0%, transparent 70%);
+}
+
+.bg-blob-3 {
+  width: 400px;
+  height: 400px;
+  top: 40%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+}
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(60px, 40px) scale(1.1); }
+  50% { transform: translate(-30px, 80px) scale(0.95); }
+  75% { transform: translate(40px, -30px) scale(1.05); }
+}
+
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-50px, -40px) scale(1.08); }
+  50% { transform: translate(40px, -60px) scale(0.92); }
+  75% { transform: translate(-20px, 30px) scale(1.03); }
+}
+
+@keyframes blob-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, -40px) scale(1.12); }
+}
+
+/* Layer 5 — Particle canvas */
+.bg-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+/* Layer 6 — Glass reflections (diagonal streaks) */
+.bg-reflection {
+  position: absolute;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.015) 45%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.015) 55%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.bg-reflection-1 {
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+}
+
+.bg-reflection-2 {
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  right: -25%;
+  opacity: 0.5;
+}
+
+@keyframes reflection-move-1 {
+  0% { transform: translateX(-30%) translateY(-30%) rotate(0deg); }
+  100% { transform: translateX(30%) translateY(30%) rotate(360deg); }
+}
+
+@keyframes reflection-move-2 {
+  0% { transform: translateX(30%) translateY(30%) rotate(360deg); }
+  100% { transform: translateX(-30%) translateY(-30%) rotate(0deg); }
+}
+
+/* Layer 7 — Moving radial lights */
+.bg-radial {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.25;
+}
+
+.bg-radial-1 {
+  width: 800px;
+  height: 800px;
+  top: 20%;
+  left: -15%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
+}
+
+.bg-radial-2 {
+  width: 600px;
+  height: 600px;
+  bottom: 10%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, transparent 60%);
+}
+
+@keyframes radial-move-1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(100px, -50px); }
+  50% { transform: translate(50px, 80px); }
+  75% { transform: translate(-40px, 20px); }
+}
+
+@keyframes radial-move-2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-60px, 40px); }
+  66% { transform: translate(50px, -30px); }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bg-aurora,
+  .bg-blob,
+  .bg-reflection,
+  .bg-radial {
+    animation: none !important;
+  }
+}

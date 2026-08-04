@@ -1,0 +1,81 @@
+import React, { useEffect, useState } from "react";
+import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+import BackgroundLayers from "./components/BackgroundLayers";
+import WelcomeScreen from "./components/WelcomeScreen";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Experience from "./components/Experience";
+import Education from "./components/Education";
+import Projects from "./components/Projects";
+import Skills from "./components/Skills";
+import Contact from "./components/Contact";
+import "./App.css";
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.04,
+      wheelMultiplier: 1.2,
+      smoothWheel: true,
+      normalizeWheel: true,
+      infinite: false,
+    });
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    const update = (time) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(update);
+    gsap.ticker.lagSmoothing(0); // Helps with GSAP ScrollTrigger + Lenis sync
+    
+    window.lenis = lenis; // Expose globally to fix scroll conflicts
+
+    if (isLoading) {
+      lenis.stop();
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+      lenis.start();
+    }
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(update);
+    };
+  }, [isLoading]);
+
+  return (
+    <div className="app-container" style={{ height: isLoading ? '100vh' : 'auto', overflow: isLoading ? 'hidden' : 'visible' }}>
+      {/* Immersive background atmosphere */}
+      <BackgroundLayers />
+
+      {isLoading && <WelcomeScreen onComplete={() => setIsLoading(false)} />}
+
+      <main style={{ position: 'relative', zIndex: 1 }}>
+        <Hero isLoaded={!isLoading} />
+        <About isLoaded={!isLoading} />
+        <Experience />
+        <Education />
+        <Projects />
+        <Skills />
+        <Contact isLoaded={!isLoading} />
+      </main>
+    </div>
+  );
+}
+
+export default App;

@@ -1,0 +1,198 @@
+/* ════════════════════════════════════════════════
+   PROJECTS — Luxury Showcase Centerpiece
+   ════════════════════════════════════════════════ */
+
+.proj-section {
+  position: relative;
+  width: 100%;
+  padding: var(--section-pad) 24px;
+  overflow: hidden;
+}
+
+.proj-container {
+  max-width: var(--container);
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 40px;
+  padding: 80px 56px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: none;
+}
+
+/* ═══ SCROLL STACK STYLING ═══ */
+.proj-scroll-stack .scroll-stack-inner {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 !important;
+}
+
+/* ═══ PROJECT CARD ═══ */
+.proj-scroll-stack .proj-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 380px;
+  padding: 52px 48px !important;
+  border-radius: var(--radius-lg) !important;
+  margin-left: 0 !important;
+  background: #000000 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.proj-scroll-stack .proj-card:hover {
+  transform: none !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Header */
+.proj-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.proj-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.proj-card__number {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+}
+
+.proj-card__category {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(var(--primary-rgb), 0.1);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+}
+
+.proj-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  transition: var(--transition);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.proj-card__link:hover {
+  background: rgba(var(--primary-rgb), 0.15);
+  border-color: rgba(var(--primary-rgb), 0.4);
+  box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+}
+
+.proj-card__link--disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Content */
+.proj-card__title {
+  font-family: var(--font-headline);
+  font-size: clamp(28px, 3.5vw, 38px);
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.proj-card__desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-bottom: 32px;
+  max-width: 560px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Tech tags */
+.proj-card__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.proj-card__tech-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.proj-card:hover .proj-card__tech-tag {
+  border-color: rgba(var(--primary-rgb), 0.2);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .proj-section {
+    padding: var(--section-pad-mobile) 16px;
+  }
+
+  .proj-scroll-stack .proj-card {
+    padding: 32px 24px !important;
+    min-height: 300px;
+  }
+
+  .proj-card__title {
+    font-size: 24px;
+  }
+
+  .proj-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
