@@ -183,3 +183,16 @@
     animation: none !important;
   }
 }
+
+/* Hide expensive background effects on mobile */
+@media (max-width: 768px) {
+  .bg-blob,
+  .bg-reflection,
+  .bg-radial {
+    display: none;
+  }
+
+  .bg-aurora {
+    opacity: 0.5;
+  }
+}

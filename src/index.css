@@ -506,6 +506,43 @@ html.lenis, html.lenis body { height: auto; }
   .section-eyebrow::after {
     width: 20px;
   }
+
+  /* ===== MOBILE PERFORMANCE OPTIMIZATIONS ===== */
+
+  /* Reduce expensive backdrop-filter on mobile */
+  .glass-panel,
+  .glass-card,
+  .liquid-glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Disable pseudo-element gradient borders on mobile — saves GPU compositing */
+  .glass-panel::before,
+  .glass-card::before,
+  .liquid-glass::before {
+    display: none;
+  }
+
+  /* Disable holographic sweep animation on mobile */
+  .holo-sweep::after {
+    display: none;
+  }
+
+  /* Remove animated gradient border on mobile */
+  .gradient-border::after {
+    display: none;
+  }
+
+  /* Disable noise overlay on mobile for GPU savings */
+  body::after {
+    display: none;
+  }
+
+  /* Optimize fixed bg layers */
+  .bg-layers {
+    will-change: auto;
+  }
 }
 
 @media (max-width: 480px) {

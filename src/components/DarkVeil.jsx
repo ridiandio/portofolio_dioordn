@@ -88,9 +88,10 @@ export default function DarkVeil({
   useEffect(() => {
     const canvas = ref.current;
     const parent = canvas.parentElement;
+    const isMobile = window.innerWidth < 768;
 
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: isMobile ? 1 : Math.min(window.devicePixelRatio, 2),
       canvas
     });
 
@@ -125,8 +126,13 @@ export default function DarkVeil({
 
     const start = performance.now();
     let frame = 0;
+    let lastRender = 0;
+    const frameInterval = isMobile ? 1000 / 30 : 0; // 30fps cap on mobile
 
-    const loop = () => {
+    const loop = (now) => {
+      frame = requestAnimationFrame(loop);
+      if (isMobile && now - lastRender < frameInterval) return;
+      lastRender = now;
       program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
       program.uniforms.uHueShift.value = hueShift;
       program.uniforms.uNoise.value = noiseIntensity;
@@ -134,7 +140,6 @@ export default function DarkVeil({
       program.uniforms.uScanFreq.value = scanlineFrequency;
       program.uniforms.uWarp.value = warpAmount;
       renderer.render({ scene: mesh });
-      frame = requestAnimationFrame(loop);
     };
 
     loop();

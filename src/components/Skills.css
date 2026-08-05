@@ -334,6 +334,7 @@
 
   .skill-island {
     padding: 24px 20px;
+    animation: none;
   }
 
   .skill-island__grid {

@@ -407,6 +407,7 @@
 
   .about-stat {
     padding: 24px 12px;
+    animation: none;
   }
 
   .about-stat__value {
@@ -420,11 +421,35 @@
   .about-left {
     padding: 28px 20px;
     border-radius: 24px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .about-right {
     padding: 28px 20px;
     border-radius: 24px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* Disable expensive continuously-running animations on mobile */
+  .holo-ring--outer,
+  .holo-ring--inner {
+    animation: none;
+  }
+
+  .holo-prism {
+    animation: none;
+  }
+
+  .holo-core {
+    animation: none;
+  }
+
+  .holo-orbit--1,
+  .holo-orbit--2,
+  .holo-orbit--3 {
+    animation: none;
   }
 }
 

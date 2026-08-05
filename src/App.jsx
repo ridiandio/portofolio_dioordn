@@ -24,12 +24,16 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
     const lenis = new Lenis({
-      lerp: 0.04,
-      wheelMultiplier: 1.2,
+      lerp: isMobile ? 0.1 : 0.04,
+      wheelMultiplier: isMobile ? 1 : 1.2,
       smoothWheel: true,
       normalizeWheel: true,
       infinite: false,
+      syncTouch: false,
+      touchMultiplier: 1.5,
     });
 
     lenis.on("scroll", ScrollTrigger.update);
