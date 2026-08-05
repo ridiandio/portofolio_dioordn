@@ -7,6 +7,15 @@ import DarkVeil from "./DarkVeil";
 import LogoLoop from "./LogoLoop";
 
 const Hero = ({ isLoaded = true }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const skillsMastered = [
     { name: "Laravel", icon: <SiLaravel color="#FF2D20" size={16} /> },
     { name: "React.js", icon: <SiReact color="#61DAFB" size={16} /> },
@@ -100,13 +109,13 @@ const Hero = ({ isLoaded = true }) => {
             <div className="hero-marquee-track-wrap">
               <LogoLoop
                 logos={skillsMastered.map(skill => ({
-                  node: React.cloneElement(skill.icon, { size: 36, color: "#ffffff" }),
+                  node: React.cloneElement(skill.icon, { size: isMobile ? 24 : 36, color: "#ffffff" }),
                   title: skill.name,
                 }))}
-                speed={window.innerWidth < 768 ? 50 : 100}
+                speed={isMobile ? 40 : 100}
                 direction="left"
-                logoHeight={36}
-                gap={48}
+                logoHeight={isMobile ? 24 : 36}
+                gap={isMobile ? 24 : 48}
                 hoverSpeed={0}
                 scaleOnHover={true}
                 fadeOut={true}
