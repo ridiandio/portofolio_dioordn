@@ -82,7 +82,13 @@ const Hero = ({ isLoaded = true }) => {
             warpAmount={2.5}
           />
         ) : (
-          <div style={{ width: '100%', height: '100%', background: 'linear-gradient(to bottom, #000000, #0a0a0a)' }} />
+          <div 
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              background: 'radial-gradient(ellipse at 50% -20%, rgba(168, 85, 247, 0.4) 0%, rgba(124, 58, 237, 0.2) 40%, #000000 100%)' 
+            }} 
+          />
         )}
       </div>
 
