@@ -2,7 +2,6 @@ import React, { useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
-import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import "./Projects.css";
 
 const Projects = () => {
@@ -69,22 +68,16 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        {/* Project Showcase Stack */}
-        <ScrollStack
-          className="proj-scroll-stack"
-          useWindowScroll={true}
-          itemDistance={100}
-          itemScale={0.015}
-          itemStackDistance={30}
-          stackPosition="20%"
-          scaleEndPosition="10%"
-          baseScale={0.92}
-          blurAmount={0}
-        >
+        {/* Project Showcase Grid */}
+        <div className="proj-list">
           {projects.map((proj, idx) => (
-            <ScrollStackItem
+            <motion.div
               key={idx}
-              itemClassName={`proj-card glass-panel ${proj.large ? "large" : ""}`}
+              className={`proj-card glass-panel ${proj.large ? "large" : ""}`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.1 }}
             >
               {/* Header */}
               <div className="proj-card__header">
@@ -123,9 +116,9 @@ const Projects = () => {
                   <span key={i} className="proj-card__tech-tag">{t}</span>
                 ))}
               </div>
-            </ScrollStackItem>
+            </motion.div>
           ))}
-        </ScrollStack>
+        </div>
       </div>
     </section>
   );

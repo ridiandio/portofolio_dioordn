@@ -25,35 +25,30 @@
   transition: none;
 }
 
-/* ═══ SCROLL STACK STYLING ═══ */
-.proj-scroll-stack .scroll-stack-inner {
+/* ═══ PROJECT LIST STYLING ═══ */
+.proj-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   max-width: 960px;
-  width: 100%;
   margin: 0 auto;
-  padding: 0 !important;
 }
 
 /* ═══ PROJECT CARD ═══ */
-.proj-scroll-stack .proj-card {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-height: 380px;
-  padding: 52px 48px !important;
-  border-radius: var(--radius-lg) !important;
-  margin-left: 0 !important;
-  background: #000000 !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
-  transition: border-color 0.5s ease, box-shadow 0.5s ease !important;
+.proj-card {
+  width: 100%;
+  padding: 52px 48px;
+  border-radius: var(--radius-lg);
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
   position: relative;
   overflow: hidden;
 }
 
-.proj-scroll-stack .proj-card:hover {
-  transform: none !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
+.proj-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Header */
@@ -185,8 +180,12 @@
     border-radius: 24px;
   }
 
-  .proj-scroll-stack .proj-card {
-    padding: 28px 20px !important;
+  .proj-list {
+    gap: 24px;
+  }
+
+  .proj-card {
+    padding: 28px 20px;
     min-height: auto;
   }
 
@@ -222,8 +221,12 @@
     border-radius: 20px;
   }
 
-  .proj-scroll-stack .proj-card {
-    padding: 24px 16px !important;
+  .proj-list {
+    gap: 16px;
+  }
+
+  .proj-card {
+    padding: 24px 16px;
   }
 
   .proj-card__title {
