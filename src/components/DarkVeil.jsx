@@ -91,7 +91,7 @@ export default function DarkVeil({
     const isMobile = window.innerWidth < 768;
 
     const renderer = new Renderer({
-      dpr: isMobile ? 1 : Math.min(window.devicePixelRatio, 2),
+      dpr: isMobile ? 0.5 : Math.min(window.devicePixelRatio, 2),
       canvas
     });
 
@@ -128,8 +128,13 @@ export default function DarkVeil({
     let frame = 0;
     let lastRender = 0;
     const frameInterval = isMobile ? 1000 / 30 : 0; // 30fps cap on mobile
+    let isVisible = true;
 
     const loop = (now) => {
+      if (!isVisible) {
+        frame = null;
+        return;
+      }
       frame = requestAnimationFrame(loop);
       if (isMobile && now - lastRender < frameInterval) return;
       lastRender = now;
@@ -142,10 +147,23 @@ export default function DarkVeil({
       renderer.render({ scene: mesh });
     };
 
-    loop();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible && frame === null) {
+          lastRender = performance.now();
+          loop(lastRender);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(parent);
+
+    loop(performance.now());
 
     return () => {
-      cancelAnimationFrame(frame);
+      observer.disconnect();
+      if (frame !== null) cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
     };
   }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale]);
