@@ -92,7 +92,13 @@ const About = ({ isLoaded = true }) => {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="about-photo-wrapper">
-              <img src="/profile-photo.png" alt="Mohamad Dio Ridian" className="about-photo" />
+              <img 
+                src="/profile-photo.png" 
+                alt="Mohamad Dio Ridian" 
+                className="about-photo"
+                draggable={false}
+                onContextMenu={(e) => e.preventDefault()}
+              />
             </div>
             
             {/* Profile Card */}
