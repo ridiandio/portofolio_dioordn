@@ -57,174 +57,27 @@
   }
 }
 
-.holo-sculpture {
+.about-photo-wrapper {
   position: relative;
-  width: 380px;
+  width: 280px;
   height: 380px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-.holo-sculpture__container {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Rings */
-.holo-ring {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.holo-ring--outer {
+.about-photo {
   width: 100%;
   height: 100%;
-  animation: holo-rotate 20s linear infinite;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1) brightness(0.9);
+  transition: filter 0.5s ease, transform 0.5s ease;
 }
 
-.holo-ring--outer svg {
-  width: 100%;
-  height: 100%;
-}
-
-.holo-ring--inner {
-  width: 60%;
-  height: 60%;
-  animation: holo-rotate-reverse 15s linear infinite;
-}
-
-.holo-ring--inner svg {
-  width: 100%;
-  height: 100%;
-}
-
-@keyframes holo-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes holo-rotate-reverse {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
-/* Prism */
-.holo-prism {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  transform-style: preserve-3d;
-  animation: prism-float 8s ease-in-out infinite;
-}
-
-.holo-prism__face {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(124, 58, 237, 0.2);
-  border-radius: 4px;
-}
-
-.holo-prism__face--1 {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(96, 165, 250, 0.05) 100%);
-  transform: rotateY(0deg) translateZ(30px);
-}
-
-.holo-prism__face--2 {
-  background: linear-gradient(135deg, rgba(96, 165, 250, 0.06) 0%, rgba(168, 85, 247, 0.04) 100%);
-  transform: rotateY(45deg) translateZ(30px);
-}
-
-.holo-prism__face--3 {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.06) 0%, rgba(124, 58, 237, 0.03) 100%);
-  transform: rotateY(90deg) translateZ(30px);
-}
-
-.holo-prism__face--4 {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.04) 0%, rgba(96, 165, 250, 0.06) 100%);
-  transform: rotateY(135deg) translateZ(30px);
-}
-
-@keyframes prism-float {
-  0%, 100% {
-    transform: rotateX(15deg) rotateY(0deg) translateY(0);
-  }
-  25% {
-    transform: rotateX(20deg) rotateY(90deg) translateY(-10px);
-  }
-  50% {
-    transform: rotateX(10deg) rotateY(180deg) translateY(5px);
-  }
-  75% {
-    transform: rotateX(18deg) rotateY(270deg) translateY(-8px);
-  }
-}
-
-/* Energy core */
-.holo-core {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #60A5FA 0%, var(--primary) 60%, transparent 100%);
-  box-shadow:
-    0 0 20px rgba(96, 165, 250, 0.6),
-    0 0 60px rgba(124, 58, 237, 0.3),
-    0 0 100px rgba(124, 58, 237, 0.1);
-  animation: core-pulse 3s ease-in-out infinite;
-}
-
-@keyframes core-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 1; }
-}
-
-/* Orbital dots */
-.holo-orbit {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.holo-orbit--1 { animation: orbit-spin 12s linear infinite; }
-.holo-orbit--2 { animation: orbit-spin 18s linear infinite reverse; }
-.holo-orbit--3 { animation: orbit-spin 25s linear infinite; }
-
-@keyframes orbit-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.holo-dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.8);
-}
-
-.holo-orbit--1 .holo-dot { top: 8%; left: 50%; }
-.holo-orbit--2 .holo-dot { top: 50%; right: 5%; }
-.holo-orbit--3 .holo-dot { bottom: 12%; left: 20%; }
-
-/* Reflection */
-.holo-sculpture__reflection {
-  width: 200px;
-  height: 60px;
-  margin-top: -10px;
-  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
-  filter: blur(20px);
+.about-photo-wrapper:hover .about-photo {
+  filter: grayscale(0%) contrast(1.1) brightness(1);
+  transform: scale(1.05);
 }
 
 /* ═══ RIGHT — TYPOGRAPHY ═══ */
@@ -359,15 +212,10 @@
     order: -1;
   }
 
-  .holo-sculpture {
-    width: 280px;
-    height: 280px;
+  .about-photo-wrapper {
+    width: 260px;
+    height: 340px;
     margin: 0 auto;
-  }
-
-  .holo-sculpture__container {
-    width: 220px;
-    height: 220px;
   }
 }
 
@@ -432,25 +280,7 @@
     -webkit-backdrop-filter: none;
   }
 
-  /* Disable expensive continuously-running animations on mobile */
-  .holo-ring--outer,
-  .holo-ring--inner {
-    animation: none;
-  }
 
-  .holo-prism {
-    animation: none;
-  }
-
-  .holo-core {
-    animation: none;
-  }
-
-  .holo-orbit--1,
-  .holo-orbit--2,
-  .holo-orbit--3 {
-    animation: none;
-  }
 }
 
 @media (max-width: 480px) {
@@ -483,14 +313,9 @@
     padding: 24px 16px;
   }
 
-  .holo-sculpture {
-    width: 220px;
-    height: 220px;
-  }
-
-  .holo-sculpture__container {
-    width: 180px;
-    height: 180px;
+  .about-photo-wrapper {
+    width: 200px;
+    height: 260px;
   }
 }
 

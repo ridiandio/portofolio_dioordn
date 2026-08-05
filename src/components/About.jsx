@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import Lanyard from "./Lanyard";
 import "./About.css";
 
 /* ─── Count-up Hook ─── */
@@ -84,7 +83,7 @@ const About = ({ isLoaded = true }) => {
       <div className="about-container">
         {/* Exhibition Layout */}
         <div className="about-exhibition">
-          {/* Left — Interactive Lanyard */}
+          {/* Left — Profile Image */}
           <motion.div
             className="about-left"
             initial={{ opacity: 0, x: -60, scale: 0.9 }}
@@ -92,7 +91,9 @@ const About = ({ isLoaded = true }) => {
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} frontImage="/depan.jpeg" backImage="/belakang.jpeg" imageFit="cover" />
+            <div className="about-photo-wrapper">
+              <img src="/profile-photo.jpeg" alt="Mohamad Dio Ridian" className="about-photo" />
+            </div>
             
             {/* Profile Card */}
             <div className="about-profile-card">
