@@ -61,10 +61,13 @@
   position: relative;
   width: 280px;
   height: 380px;
+  margin: 0 auto;
+  /* Remove rigid border and shadow */
   border-radius: 24px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  /* Smoothly fade out the edges of the photo into the dark background */
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
 }
 
 .about-photo {
