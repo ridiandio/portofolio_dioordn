@@ -95,14 +95,12 @@ export default function DarkVeil({
   }, []);
 
   useEffect(() => {
-    if (isMobile) return; // Skip WebGL on mobile
-
     const canvas = ref.current;
     if (!canvas) return;
     const parent = canvas.parentElement;
 
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: isMobile ? 0.5 : Math.min(window.devicePixelRatio, 2),
       canvas
     });
 
@@ -176,10 +174,6 @@ export default function DarkVeil({
       window.removeEventListener('resize', resize);
     };
   }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, isMobile]);
-
-  if (isMobile) {
-    return <div className="darkveil-mobile-fallback" />;
-  }
 
   return <canvas ref={ref} className="darkveil-canvas" />;
 }

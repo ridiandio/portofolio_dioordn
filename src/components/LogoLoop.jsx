@@ -240,7 +240,7 @@ export const LogoLoop = memo(
         '--logoloop-gap': `${gap}px`,
         '--logoloop-logoHeight': `${logoHeight}px`,
         '--logoloop-scroll-width': isVertical ? `-${seqHeight}px` : `-${seqWidth}px`,
-        '--logoloop-duration': `${Math.abs(10000 / speed)}s`,
+        '--logoloop-duration': `${Math.abs((isVertical ? seqHeight : seqWidth) / speed)}s`,
         ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
       }),
       [gap, logoHeight, fadeOutColor, seqWidth, seqHeight, isVertical, speed]
