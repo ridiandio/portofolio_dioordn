@@ -61,12 +61,30 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
   const lastTimestampRef = useRef(null);
   const offsetRef = useRef(0);
   const velocityRef = useRef(0);
+  const isVisibleRef = useRef(true);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
     const seqSize = isVertical ? seqHeight : seqWidth;
+
+    // Intersection Observer to pause animation when out of view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisibleRef.current = entries[0].isIntersecting;
+        if (isVisibleRef.current && rafRef.current === null) {
+          lastTimestampRef.current = performance.now();
+          rafRef.current = requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0 }
+    );
+    
+    // We observe the parent container to know when to pause
+    if (track.parentElement) {
+      observer.observe(track.parentElement);
+    }
 
     if (seqSize > 0) {
       offsetRef.current = ((offsetRef.current % seqSize) + seqSize) % seqSize;
@@ -77,6 +95,11 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     }
 
     const animate = timestamp => {
+      if (!isVisibleRef.current) {
+        rafRef.current = null;
+        return; // Pause animation loop
+      }
+
       if (lastTimestampRef.current === null) {
         lastTimestampRef.current = timestamp;
       }
@@ -103,9 +126,14 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
       rafRef.current = requestAnimationFrame(animate);
     };
 
-    rafRef.current = requestAnimationFrame(animate);
+    // Start initial loop if not observed yet, or if already visible
+    if (rafRef.current === null) {
+       lastTimestampRef.current = performance.now();
+       rafRef.current = requestAnimationFrame(animate);
+    }
 
     return () => {
+      observer.disconnect();
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;

@@ -198,7 +198,7 @@ const Hero = ({ isLoaded = true }) => {
                   node: React.cloneElement(skill.icon, { size: 36, color: "#ffffff" }),
                   title: skill.name,
                 }))}
-                speed={100}
+                speed={window.innerWidth < 768 ? 50 : 100}
                 direction="left"
                 logoHeight={36}
                 gap={48}
