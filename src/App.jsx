@@ -56,9 +56,27 @@ function App() {
       lenis.start();
     }
 
+    // Disable browser zoom via keyboard (Ctrl + / Ctrl -) and mouse wheel (Ctrl + Wheel)
+    const handleKeydown = (e) => {
+      if (e.ctrlKey && (e.key === '=' || e.key === '-' || e.key === '+' || e.key === '_' || e.key === '0')) {
+        e.preventDefault();
+      }
+    };
+    
+    const handleWheel = (e) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeydown, { passive: false });
+    document.addEventListener('wheel', handleWheel, { passive: false });
+
     return () => {
       lenis.destroy();
       gsap.ticker.remove(update);
+      document.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('wheel', handleWheel);
     };
   }, [isLoading]);
 
