@@ -102,6 +102,12 @@
     align-items: center;
     text-align: center;
   }
+  
+  .about-eyebrow {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .about-eyebrow {
