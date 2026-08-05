@@ -66,6 +66,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
     const seqSize = isVertical ? seqHeight : seqWidth;
 
@@ -73,7 +74,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     const observer = new IntersectionObserver(
       (entries) => {
         isVisibleRef.current = entries[0].isIntersecting;
-        if (isVisibleRef.current && rafRef.current === null) {
+        if (isVisibleRef.current && rafRef.current === null && !isMobile) {
           lastTimestampRef.current = performance.now();
           rafRef.current = requestAnimationFrame(animate);
         }
@@ -129,7 +130,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     };
 
     // Start initial loop if not observed yet, or if already visible
-    if (rafRef.current === null) {
+    if (!isMobile && rafRef.current === null) {
        lastTimestampRef.current = performance.now();
        rafRef.current = requestAnimationFrame(animate);
     }
