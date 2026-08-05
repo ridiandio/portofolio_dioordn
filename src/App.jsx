@@ -11,6 +11,7 @@ if ('scrollRestoration' in history) {
 
 import BackgroundLayers from "./components/BackgroundLayers";
 import WelcomeScreen from "./components/WelcomeScreen";
+import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Experience from "./components/Experience";
@@ -97,6 +98,8 @@ function App() {
       <BackgroundLayers />
 
       {isLoading && <WelcomeScreen onComplete={() => setIsLoading(false)} />}
+
+      <Navbar />
 
       <main style={{ position: 'relative', zIndex: 1 }}>
         <Hero isLoaded={!isLoading} />
