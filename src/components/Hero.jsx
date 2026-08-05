@@ -109,13 +109,13 @@ const Hero = ({ isLoaded = true }) => {
             <div className="hero-marquee-track-wrap">
               <LogoLoop
                 logos={skillsMastered.map(skill => ({
-                  node: React.cloneElement(skill.icon, { size: isMobile ? 24 : 36, color: "#ffffff" }),
+                  node: React.cloneElement(skill.icon, { size: 36, color: "#ffffff" }),
                   title: skill.name,
                 }))}
                 speed={isMobile ? 40 : 100}
                 direction="left"
-                logoHeight={isMobile ? 24 : 36}
-                gap={isMobile ? 24 : 48}
+                logoHeight={36}
+                gap={48}
                 hoverSpeed={0}
                 scaleOnHover={true}
                 fadeOut={true}
