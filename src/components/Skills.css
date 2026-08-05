@@ -322,28 +322,97 @@
   z-index: -1;
 }
 
-/* ═══ RESPONSIVE ═══ */
 @media (max-width: 768px) {
   .skills-section {
     padding: var(--section-pad-mobile) 16px;
   }
 
+  .skills-container {
+    padding: 36px 20px;
+    border-radius: 24px;
+  }
+
   .skill-island {
-    padding: 28px 24px;
+    padding: 24px 20px;
   }
 
   .skill-island__grid {
     grid-template-columns: 1fr;
   }
 
+  .skill-island__title {
+    font-size: 18px;
+  }
+
   .award-card {
     flex-direction: column;
     align-items: flex-start;
-    padding: 24px;
+    padding: 20px;
   }
 
   .skills-awards {
-    margin-top: 60px;
+    margin-top: 48px;
+  }
+
+  .skills-tab-switcher {
+    width: 100%;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .skills-tab-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .skills-tab-btn span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-container {
+    padding: 28px 14px;
+    border-radius: 20px;
+  }
+
+  .skill-island {
+    padding: 20px 16px;
+  }
+
+  .skill-island__title {
+    font-size: 16px;
+  }
+
+  .skill-island__count {
+    font-size: 11px;
+  }
+
+  .skills-tab-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .skills-tab-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .award-card__title {
+    font-size: 14px;
+  }
+
+  .cert-card {
+    padding: 24px 16px;
+  }
+
+  .cert-card__title {
+    font-size: 15px;
   }
 }
 

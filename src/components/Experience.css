@@ -348,16 +348,27 @@
   }
 
   .exp-container {
-    padding: 40px 24px;
+    padding: 36px 20px;
     border-radius: 24px;
   }
 
+  /* Hide the animated glow on mobile — active state handles highlighting */
+  .exp-selector__glow {
+    display: none;
+  }
+
   .exp-card {
-    padding: 32px 24px;
+    padding: 28px 20px;
+  }
+
+  .exp-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   .exp-card__title {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .exp-card__desc {
@@ -365,17 +376,50 @@
   }
 
   .exp-selector__item {
-    padding: 10px 16px;
+    padding: 10px 14px;
   }
 
   .exp-selector__name {
     font-size: 13px;
   }
 
-  .exp-selector__icon {
-    width: 30px;
-    height: 30px;
-    min-width: 30px;
-    border-radius: 8px;
+  .exp-card__skills {
+    gap: 6px;
+  }
+
+  .exp-card__tech {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .exp-container {
+    padding: 28px 14px;
+    border-radius: 20px;
+  }
+
+  .exp-card {
+    padding: 24px 16px;
+  }
+
+  .exp-card__title {
+    font-size: 18px;
+  }
+
+  .exp-card__desc {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .exp-selector__item {
+    padding: 8px 12px;
+  }
+
+  .exp-selector__name {
+    font-size: 12px;
+  }
+
+  .section-header {
+    margin-bottom: 36px;
   }
 }
