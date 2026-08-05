@@ -66,7 +66,6 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
     const seqSize = isVertical ? seqHeight : seqWidth;
 
@@ -74,7 +73,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     const observer = new IntersectionObserver(
       (entries) => {
         isVisibleRef.current = entries[0].isIntersecting;
-        if (isVisibleRef.current && rafRef.current === null && !isMobile) {
+        if (isVisibleRef.current && rafRef.current === null) {
           lastTimestampRef.current = performance.now();
           rafRef.current = requestAnimationFrame(animate);
         }
@@ -96,8 +95,6 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     }
 
     const animate = timestamp => {
-      if (isMobile) return; // Disable JS animation loop completely on mobile
-
       if (!isVisibleRef.current) {
         rafRef.current = null;
         return; // Pause animation loop
@@ -130,7 +127,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     };
 
     // Start initial loop if not observed yet, or if already visible
-    if (!isMobile && rafRef.current === null) {
+    if (rafRef.current === null) {
        lastTimestampRef.current = performance.now();
        rafRef.current = requestAnimationFrame(animate);
     }
@@ -172,7 +169,6 @@ export const LogoLoop = memo(
     const [seqHeight, setSeqHeight] = useState(0);
     const [copyCount, setCopyCount] = useState(ANIMATION_CONFIG.MIN_COPIES);
     const [isHovered, setIsHovered] = useState(false);
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
     const effectiveHoverSpeed = useMemo(() => {
       if (hoverSpeed !== undefined) return hoverSpeed;
@@ -211,15 +207,16 @@ export const LogoLoop = memo(
         if (sequenceHeight > 0) {
           setSeqHeight(Math.ceil(sequenceHeight));
           const viewport = containerRef.current?.clientHeight ?? parentHeight ?? sequenceHeight;
-          const copiesNeeded = isMobile ? 2 : Math.ceil(viewport / sequenceHeight) + ANIMATION_CONFIG.COPY_HEADROOM;
+          const copiesNeeded = Math.ceil(viewport / sequenceHeight) + ANIMATION_CONFIG.COPY_HEADROOM;
           setCopyCount(Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded));
         }
       } else if (sequenceWidth > 0) {
         setSeqWidth(Math.ceil(sequenceWidth));
-        const copiesNeeded = isMobile ? 2 : Math.ceil(containerWidth / sequenceWidth) + ANIMATION_CONFIG.COPY_HEADROOM;
+        const containerWidth = containerRef.current?.clientWidth ?? 0;
+        const copiesNeeded = Math.ceil(containerWidth / sequenceWidth) + ANIMATION_CONFIG.COPY_HEADROOM;
         setCopyCount(Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded));
       }
-    }, [isVertical, isMobile]);
+    }, [isVertical]);
 
     useResizeObserver(updateDimensions, [containerRef, seqRef], [logos, gap, logoHeight, isVertical]);
 

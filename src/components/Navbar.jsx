@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./Hero.css"; // Reuse the styles defined in Hero.css for the power-navbar
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Lock body when mobile menu open
   useEffect(() => {
@@ -34,7 +41,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="power-navbar">
+      <nav className={`power-navbar ${isScrolled ? "scrolled" : ""}`}>
         <div className="nav-logo-placeholder" style={{ width: '40px' }} />
         {/* Center nav (desktop) */}
         <div className="nav-center">

@@ -187,15 +187,3 @@
   }
 }
 
-/* ===== MOBILE PURE CSS MARQUEE ===== */
-/* Hardware-accelerated CSS animation for buttery smooth scrolling on mobile */
-@media (max-width: 768px) {
-  .logoloop__track {
-    animation: logoloop-mobile-scroll 15s linear infinite;
-  }
-  
-  @keyframes logoloop-mobile-scroll {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(-50%, 0, 0); }
-  }
-}
