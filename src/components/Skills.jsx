@@ -29,7 +29,7 @@ const Skills = () => {
     {
       title: "Field Work Practice Certificate",
       issuer: "Vocational High School 1 Barunawati Jakarta",
-      year: "2023",
+      year: "2022",
       image: "/Field Work Practice Certificate.jpeg",
       text: "Internship Certificate",
     },
