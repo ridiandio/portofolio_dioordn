@@ -25,35 +25,42 @@ function App() {
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
+    let update = null;
+    let lenis = null;
 
-    const lenis = new Lenis({
-      lerp: isMobile ? 0.1 : 0.04,
-      wheelMultiplier: isMobile ? 1 : 1.2,
-      smoothWheel: true,
-      normalizeWheel: true,
-      infinite: false,
-      syncTouch: false,
-      touchMultiplier: 1.5,
-    });
+    if (!isMobile) {
+      lenis = new Lenis({
+        lerp: 0.04,
+        wheelMultiplier: 1.2,
+        smoothWheel: true,
+        normalizeWheel: true,
+        infinite: false,
+      });
 
-    lenis.on("scroll", ScrollTrigger.update);
+      lenis.on("scroll", ScrollTrigger.update);
 
-    const update = (time) => {
-      lenis.raf(time * 1000);
-    };
+      update = (time) => {
+        lenis.raf(time * 1000);
+      };
 
-    gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0); // Helps with GSAP ScrollTrigger + Lenis sync
-    
-    window.lenis = lenis; // Expose globally to fix scroll conflicts
+      gsap.ticker.add(update);
+      gsap.ticker.lagSmoothing(0); 
+      
+      window.lenis = lenis;
 
-    if (isLoading) {
-      lenis.stop();
-      window.scrollTo(0, 0);
+      if (isLoading) {
+        lenis.stop();
+        window.scrollTo(0, 0);
+      } else {
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
+        lenis.start();
+      }
     } else {
-      window.scrollTo(0, 0);
-      lenis.scrollTo(0, { immediate: true });
-      lenis.start();
+      window.lenis = null;
+      if (!isLoading) {
+        window.scrollTo(0, 0);
+      }
     }
 
     // Disable browser zoom via keyboard (Ctrl + / Ctrl -) and mouse wheel (Ctrl + Wheel)
@@ -73,8 +80,12 @@ function App() {
     document.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
-      lenis.destroy();
-      gsap.ticker.remove(update);
+      if (lenis) {
+        lenis.destroy();
+      }
+      if (update) {
+        gsap.ticker.remove(update);
+      }
       document.removeEventListener('keydown', handleKeydown);
       document.removeEventListener('wheel', handleWheel);
     };

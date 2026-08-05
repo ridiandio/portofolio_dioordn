@@ -72,14 +72,18 @@ const Hero = ({ isLoaded = true }) => {
     <section id="home" className="hero-video-wrapper">
       {/* Interactive Cosmic Plasma Background */}
       <div className="hero-bg-particles" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0 }}>
-        <DarkVeil
-          hueShift={336}
-          noiseIntensity={0}
-          scanlineIntensity={0}
-          speed={1.9}
-          scanlineFrequency={0.5}
-          warpAmount={2.5}
-        />
+        {window.innerWidth >= 768 ? (
+          <DarkVeil
+            hueShift={336}
+            noiseIntensity={0}
+            scanlineIntensity={0}
+            speed={1.9}
+            scanlineFrequency={0.5}
+            warpAmount={2.5}
+          />
+        ) : (
+          <div style={{ width: '100%', height: '100%', background: 'linear-gradient(to bottom, #000000, #0a0a0a)' }} />
+        )}
       </div>
 
       {/* Content Layer */}
