@@ -606,6 +606,8 @@ html.lenis, html.lenis body { height: auto; }
   .contact-container {
     padding: 36px 20px;
     border-radius: 24px;
+    will-change: transform, opacity;
+    transform: translateZ(0);
   }
 }
 

@@ -66,6 +66,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+    const isMobile = window.innerWidth < 768;
 
     const seqSize = isVertical ? seqHeight : seqWidth;
 
@@ -73,7 +74,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     const observer = new IntersectionObserver(
       (entries) => {
         isVisibleRef.current = entries[0].isIntersecting;
-        if (isVisibleRef.current && rafRef.current === null) {
+        if (isVisibleRef.current && rafRef.current === null && !isMobile) {
           lastTimestampRef.current = performance.now();
           rafRef.current = requestAnimationFrame(animate);
         }
@@ -95,6 +96,8 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     }
 
     const animate = timestamp => {
+      if (isMobile) return;
+
       if (!isVisibleRef.current) {
         rafRef.current = null;
         return; // Pause animation loop
@@ -127,7 +130,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     };
 
     // Start initial loop if not observed yet, or if already visible
-    if (rafRef.current === null) {
+    if (!isMobile && rafRef.current === null) {
        lastTimestampRef.current = performance.now();
        rafRef.current = requestAnimationFrame(animate);
     }
@@ -169,6 +172,14 @@ export const LogoLoop = memo(
     const [seqHeight, setSeqHeight] = useState(0);
     const [copyCount, setCopyCount] = useState(ANIMATION_CONFIG.MIN_COPIES);
     const [isHovered, setIsHovered] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const checkMobile = () => setIsMobile(window.innerWidth < 768);
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const effectiveHoverSpeed = useMemo(() => {
       if (hoverSpeed !== undefined) return hoverSpeed;
@@ -207,16 +218,16 @@ export const LogoLoop = memo(
         if (sequenceHeight > 0) {
           setSeqHeight(Math.ceil(sequenceHeight));
           const viewport = containerRef.current?.clientHeight ?? parentHeight ?? sequenceHeight;
-          const copiesNeeded = Math.ceil(viewport / sequenceHeight) + ANIMATION_CONFIG.COPY_HEADROOM;
+          const copiesNeeded = isMobile ? 3 : Math.ceil(viewport / sequenceHeight) + ANIMATION_CONFIG.COPY_HEADROOM;
           setCopyCount(Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded));
         }
       } else if (sequenceWidth > 0) {
         setSeqWidth(Math.ceil(sequenceWidth));
         const containerWidth = containerRef.current?.clientWidth ?? 0;
-        const copiesNeeded = Math.ceil(containerWidth / sequenceWidth) + ANIMATION_CONFIG.COPY_HEADROOM;
+        const copiesNeeded = isMobile ? 3 : Math.ceil(containerWidth / sequenceWidth) + ANIMATION_CONFIG.COPY_HEADROOM;
         setCopyCount(Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded));
       }
-    }, [isVertical]);
+    }, [isVertical, isMobile]);
 
     useResizeObserver(updateDimensions, [containerRef, seqRef], [logos, gap, logoHeight, isVertical]);
 
@@ -228,9 +239,11 @@ export const LogoLoop = memo(
       () => ({
         '--logoloop-gap': `${gap}px`,
         '--logoloop-logoHeight': `${logoHeight}px`,
+        '--logoloop-scroll-width': isVertical ? `-${seqHeight}px` : `-${seqWidth}px`,
+        '--logoloop-duration': `${Math.abs(10000 / speed)}s`,
         ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
       }),
-      [gap, logoHeight, fadeOutColor]
+      [gap, logoHeight, fadeOutColor, seqWidth, seqHeight, isVertical, speed]
     );
 
     const rootClassName = useMemo(
@@ -240,11 +253,13 @@ export const LogoLoop = memo(
           isVertical ? 'logoloop--vertical' : 'logoloop--horizontal',
           fadeOut && 'logoloop--fade',
           scaleOnHover && 'logoloop--scale-hover',
+          isMobile && 'logoloop--mobile-css-anim',
+          direction === 'right' || direction === 'down' ? 'logoloop--reverse' : '',
           className
         ]
           .filter(Boolean)
           .join(' '),
-      [isVertical, fadeOut, scaleOnHover, className]
+      [isVertical, fadeOut, scaleOnHover, isMobile, direction, className]
     );
 
     const handleMouseEnter = useCallback(() => {

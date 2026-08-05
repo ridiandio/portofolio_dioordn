@@ -175,6 +175,22 @@
   );
 }
 
+/* ============ MOBILE PURE CSS ANIMATION ============ */
+@media (max-width: 768px) {
+  .logoloop--mobile-css-anim .logoloop__track {
+    animation: logoloop-mobile-scroll var(--logoloop-duration, 15s) linear infinite;
+  }
+  
+  .logoloop--mobile-css-anim.logoloop--reverse .logoloop__track {
+    animation-direction: reverse;
+  }
+
+  @keyframes logoloop-mobile-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(var(--logoloop-scroll-width, -100%), 0, 0); }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .logoloop__track {
     transform: translate3d(0, 0, 0) !important;
@@ -186,4 +202,3 @@
     transition: none !important;
   }
 }
-

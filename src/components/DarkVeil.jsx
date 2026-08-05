@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Renderer, Program, Mesh, Triangle, Vec2 } from 'ogl';
 import './DarkVeil.css';
 
@@ -85,13 +85,24 @@ export default function DarkVeil({
                                    resolutionScale = 1
                                  }) {
   const ref = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return; // Skip WebGL on mobile
+
     const canvas = ref.current;
+    if (!canvas) return;
     const parent = canvas.parentElement;
-    const isMobile = window.innerWidth < 768;
 
     const renderer = new Renderer({
-      dpr: isMobile ? 0.75 : Math.min(window.devicePixelRatio, 2),
+      dpr: Math.min(window.devicePixelRatio, 2),
       canvas
     });
 
@@ -164,7 +175,11 @@ export default function DarkVeil({
       if (frame !== null) cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
     };
-  }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale]);
+  }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, isMobile]);
+
+  if (isMobile) {
+    return <div className="darkveil-mobile-fallback" />;
+  }
 
   return <canvas ref={ref} className="darkveil-canvas" />;
 }
